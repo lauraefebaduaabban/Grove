@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Grove Learn — Personal Finance Education</title>
+  <meta
+    name="description"
+    content="Grove Learn provides simple, practical financial education to help you understand your money better."
+  >
+
+  <style>
+    :root {
+      --green: #163a32;
+      --green-dark: #102d27;
+      --cream: #f7f5ef;
+      --white: #ffffff;
+      --soft: #f0eee7;
+      --text: #1d2925;
+      --muted: #66736e;
+      --border: #dedfd9;
+      --accent: #dce9e2;
+      --shadow: 0 12px 35px rgba(22, 58, 50, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+body {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* NAVIGATION */
+    .learn-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(247, 245, 239, 0.94);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-inner {
+      width: min(1120px, calc(100% - 40px));
+      margin: auto;
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--green);
+      font-size: 1.05rem;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      background: var(--green);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .back-link {
+      color: var(--muted);
+      font-size: 0.92rem;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--green);
+    }
+
+    /* HERO */
+    .learn-hero {
+      padding: 92px 20px 70px;
+      text-align: center;
+    }
+
+    .hero-inner {
+      width: min(820px, 100%);
+      margin: auto;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .learn-hero h1 {
+      color: var(--green);
+      font-size: clamp(2.5rem, 6vw, 4.6rem);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+      margin-bottom: 22px;
+    }
+
+    .hero-description {
+      max-width: 650px;
+      margin: auto;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    /* ON THIS PAGE */
+    .page-guide {
+      width: min(1000px, calc(100% - 40px));
+      margin: 0 auto 70px;
+      padding: 24px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .page-guide h2 {
+      color: var(--green);
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .guide-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .guide-links a {
+      padding: 8px 13px;
+      border-radius: 999px;
+      background: var(--soft);
+      color: var(--green);
+      font-size: 0.88rem;
+      transition: 0.2s ease;
+    }
+
+    .guide-links a:hover {
+      background: var(--accent);
+    }
+
+    /* CONTENT */
+    .learn-content {
+      width: min(920px, calc(100% - 40px));
+      margin: auto;
+      padding-bottom: 90px;
+    }
+
+    .learn-section {
+      scroll-margin-top: 100px;
+      margin-bottom: 72px;
+    }
+
+    .section-heading {
+      margin-bottom: 28px;
+    }
+
+    .section-number {
+      display: block;
+      color: var(--green);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .section-heading h2 {
+      color: var(--green);
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+    }
+
+    .lesson {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      padding: 30px;
+      margin-bottom: 16px;
+    }
+
+    .lesson h3 {
+      color: var(--text);
+      font-size: 1.12rem;
+      margin-bottom: 10px;
+    }
+
+    .lesson p {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .lesson strong {
+      color: var(--text);
+    }
+
+    .lesson .remember {
+      margin-top: 16px;
+      padding: 13px 15px;
+      border-left: 3px solid var(--green);
+      background: var(--soft);
+      color: var(--green);
+      font-size: 0.91rem;
+    }
+
+    /* CTA */
+    .learn-cta {
+      width: min(920px, calc(100% - 40px));
+      margin: 10px auto 90px;
+      padding: 58px 30px;
+      border-radius: 24px;
+      background: var(--green);
+      color: white;
+      text-align: center;
+    }
+
+    .learn-cta h2 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      margin-bottom: 14px;
+      letter-spacing: -0.025em;
+    }
+
+    .learn-cta p {
+      max-width: 620px;
+      margin: 0 auto 26px;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 10px;
+      background: white;
+      color: var(--green);
+      font-weight: 700;
+      transition: transform 0.2s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+    }
+
+    /* FOOTER */
+    .learn-footer {
+      border-top: 1px solid var(--border);
+      padding: 28px 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    /* MOBILE */
+    @media (max-width: 640px) {
+      .nav-inner {
+        width: min(100% - 28px, 1120px);
+        min-height: 64px;
+      }
+
+      .back-link {
+        font-size: 0.84rem;
+      }
+
+      .learn-hero {
+        padding: 68px 18px 52px;
+      }
+
+      .hero-description {
+        font-size: 0.98rem;
+      }
+
+      .page-guide,
+      .learn-content,
+      .learn-cta {
+        width: calc(100% - 28px);
+      }
+
+      .page-guide {
+        padding: 20px;
+        margin-bottom: 50px;
+      }
+
+      .learn-section {
+        margin-bottom: 56px;
+      }
+
+      .lesson {
+        padding: 23px;
+        border-radius: 15px;
+      }
+
+      .lesson p {
+        font-size: 0.94rem;
+      }
+
+      .learn-cta {
+        padding: 45px 22px;
+        margin-bottom: 60px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="learn-nav">
+    <div class="nav-inner">
+      <a href="index.html" class="brand">
+        <span class="brand-mark">G</span>
+        <span>Grove</span>
+      </a>
+
+      <a href="index.html" class="back-link">← Back to Grove</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="learn-hero">
+      <div class="hero-inner">
+        <span class="eyebrow">Grove Learn</span>
+
+        <h1>Build a better understanding of your money.</h1>
+
+        <p class="hero-description">
+          Simple, practical financial education to help you understand your
+          money, make informed decisions, and build stronger financial habits.
+        </p>
+      </div>
+    </section>
+
+    <!-- ON THIS PAGE -->
+    <nav class="page-guide" aria-label="Grove Learn sections">
+      <h2>On this page</h2>
+
+      <div class="guide-links">
+        <a href="#money-foundations">Money Foundations</a>
+        <a href="#budgeting">Budgeting & Spending</a>
+        <a href="#saving">Saving</a>
+        <a href="#investing">Investing</a>
+        <a href="#decisions">Financial Decisions</a>
+      </div>
+    </nav>
+
+    <div class="learn-content">
+
+      <!-- MONEY FOUNDATIONS -->
+      <section class="learn-section" id="money-foundations">
+
+        <div class="section-heading">
+          <span class="section-number">01</span>
+          <h2>Money Foundations</h2>
+        </div>
+
+        <article class="lesson">
+          <h3>What Is Personal Finance?</h3>
+          <p>
+            Personal finance is the way you manage your money and make
+            financial decisions. It includes how you earn, spend, save,
+            invest, and plan for your future.
+          </p>
+          <div class="remember">
+            <strong>Remember:</strong> Good financial management starts with
+            understanding the money you already have.
+          </div>
+        </article>
+
+        <article class="lesson">
+          <h3>Income, Expenses & Savings</h3>
+          <p>
+            <strong>Income</strong> is the money you receive.
+            <strong>Expenses</strong> are the costs you pay.
+            <strong>Savings</strong> are the money you intentionally set
+            aside for future needs or goals. Understanding all three gives
+            you a clearer picture of where your money is going.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Needs vs Wants</h3>
+          <p>
+            A <strong>need</strong> is something essential to your wellbeing
+            or responsibilities, while a <strong>want</strong> is something
+            you would like to have but can live without. The difference can
+            depend on your circumstances, so the goal is not to avoid
+            spending on things you enjoy, but to make the distinction before
+            making a decision.
+          </p>
+          <div class="remember">
+            <strong>A useful question:</strong> Do I need this, or do I simply
+            want it right now?
+          </div>
+        </article>
+
+        <article class="lesson">
+          <h3>Understanding Net Worth</h3>
+          <p>
+            Net worth gives you a simple picture of your overall financial
+            position. It is the value of what you own, known as
+            <strong>assets</strong>, minus what you owe, known as
+            <strong>liabilities</strong>.
+          </p>
+          <div class="remember">
+            <strong>Remember:</strong> Income shows what you earn. Net worth
+            helps show what you have built.
+          </div>
+        </article>
+
+      </section>
+
+      <!-- BUDGETING -->
+      <section class="learn-section" id="budgeting">
+
+        <div class="section-heading">
+          <span class="section-number">02</span>
+          <h2>Budgeting & Spending</h2>
+        </div>
+
+        <article class="lesson">
+          <h3>What Is a Budget?</h3>
+          <p>
+            A budget is a plan for how you intend to use your money. It helps
+            you decide what should be spent, saved, or set aside for specific
+            goals before the money disappears.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Tracking Your Spending</h3>
+          <p>
+            Tracking your spending helps you see where your money actually
+            goes rather than relying on memory. Even small purchases can add
+            up over time, so knowing your spending patterns can help you make
+            better decisions.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Fixed vs Variable Expenses</h3>
+          <p>
+            <strong>Fixed expenses</strong> generally stay similar from month
+            to month, while <strong>variable expenses</strong> can change.
+            Knowing the difference makes it easier to understand which parts
+            of your spending are predictable and which require more attention.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Managing Impulse Spending</h3>
+          <p>
+            Impulse spending happens when you make a purchase without
+            properly considering whether it fits your priorities. Giving
+            yourself time to think before buying can help separate a genuine
+            need or planned purchase from a temporary desire.
+          </p>
+        </article>
+
+      </section>
+
+      <!-- SAVING -->
+      <section class="learn-section" id="saving">
+
+        <div class="section-heading">
+          <span class="section-number">03</span>
+          <h2>Saving</h2>
+        </div>
+
+        <article class="lesson">
+          <h3>What Is Saving?</h3>
+          <p>
+            Saving means setting money aside instead of spending it
+            immediately. Savings can help you prepare for future expenses,
+            unexpected situations, and goals that matter to you.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Saving vs Investing</h3>
+          <p>
+            Saving generally focuses on keeping money available for future
+            needs and shorter-term goals. Investing involves putting money
+            into assets with the expectation of potential growth over time,
+            while accepting a greater level of risk.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Emergency Funds</h3>
+          <p>
+            An emergency fund is money set aside for unexpected expenses or
+            financial disruptions. Its purpose is to give you a financial
+            buffer so that an unexpected event does not immediately become a
+            crisis.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Setting Savings Goals</h3>
+          <p>
+            A savings goal gives your money a purpose. Instead of simply
+            saying you want to save more, define what you are saving for,
+            how much you need, and when you would like to reach the goal.
+          </p>
+        </article>
+
+      </section>
+
+      <!-- INVESTING -->
+      <section class="learn-section" id="investing">
+
+        <div class="section-heading">
+          <span class="section-number">04</span>
+          <h2>Investing</h2>
+        </div>
+
+        <article class="lesson">
+          <h3>What Is Investing?</h3>
+          <p>
+            Investing means putting money into an asset with the expectation
+            that it may grow or generate income over time. Unlike ordinary
+            saving, investing involves the possibility of losing some or all
+            of the money you put in.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Long-Term vs Short-Term Investing</h3>
+          <p>
+            Short-term investing focuses on a relatively near-term objective,
+            while long-term investing gives an investment more time to
+            potentially grow. The appropriate approach depends on your goals,
+            timeframe, and ability to handle changes in value.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Risk & Diversification</h3>
+          <p>
+            Every investment carries some level of risk. Diversification
+            means spreading your money across different investments rather
+            than relying entirely on one. It can help reduce the impact of a
+            poor result from a single investment, although it cannot remove
+            investment risk completely.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Common Beginner Mistakes</h3>
+          <p>
+            Beginners can sometimes invest without understanding what they
+            are buying, follow trends without doing their own research, or
+            expect quick and guaranteed returns. Taking time to understand an
+            investment and its risks is an important first step.
+          </p>
+        </article>
+
+      </section>
+
+      <!-- FINANCIAL DECISIONS -->
+      <section class="learn-section" id="decisions">
+
+        <div class="section-heading">
+          <span class="section-number">05</span>
+          <h2>Financial Decisions</h2>
+        </div>
+
+        <article class="lesson">
+          <h3>Debt vs Saving</h3>
+          <p>
+            Managing debt and building savings are both important parts of
+            financial planning. The right balance depends on factors such as
+            the type and cost of the debt, your income, and your financial
+            priorities.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Should You Invest All Your Extra Money?</h3>
+          <p>
+            Having extra money does not automatically mean it should all be
+            invested. Before investing, consider whether you have upcoming
+            needs, financial goals, an emergency buffer, and enough
+            flexibility to handle unexpected expenses.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Lifestyle Inflation</h3>
+          <p>
+            Lifestyle inflation happens when your spending increases as your
+            income increases. Earning more can improve your life, but if
+            every increase in income immediately becomes additional spending,
+            your financial progress may remain limited.
+          </p>
+        </article>
+
+        <article class="lesson">
+          <h3>Making Better Money Decisions</h3>
+          <p>
+            Good financial decisions are rarely about finding one perfect
+            rule. They involve understanding your situation, considering the
+            consequences, and choosing an option that fits your goals,
+            priorities, and circumstances.
+          </p>
+        </article>
+
+      </section>
+
+    </div>
+
+    <!-- LEARN WITH LAURA -->
+    <section class="learn-cta">
+      <h2>Ready to take it further?</h2>
+
+      <p>
+        Grove Learn provides the foundation. Take the next step by applying these
+        principles to your own finances, goals, and financial decisions through
+        a practical one-on-one session with Laura.
+      </p>
+
+      <!-- Replace this URL with your booking/platform link -->
+      <a
+  href="https://wa.me/233592695964?text=Hello%20Laura%2C%20I%E2%80%99m%20interested%20in%20learning%20more%20about%20your%20personal%20finance%20coaching%20sessions.%20I%E2%80%99d%20appreciate%20more%20information%20about%20the%20sessions%20and%20how%20they%20work."
+  class="cta-button"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Learn with Laura →
+</a>
+    </section>
+
+  </main>
+
+  <footer class="learn-footer">
+    © 2026 Grove. All rights reserved.
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "Grove — Personal Finance",
+  "short_name": "Grove",
+  "description": "Grove helps you track your money, plan your spending, build savings goals, and understand your financial progress in one simple place.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#FBF8F1",
+  "theme_color": "#163A32",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

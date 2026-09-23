@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grove — Personal Finance</title>
+<meta name="description" content="Grove helps you track your money, plan your spending, build savings goals, and understand your financial progress in one simple place.">
+
+<!-- PWA foundations: manifest + icons + standalone display -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#163A32">
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Grove">
+<meta name="mobile-web-app-capable" content="yes">
+
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<!-- ============================================================
+     LANDING PAGE
+============================================================ -->
+<div id="landing-page">
+
+  <header class="landing-header">
+    <div class="container">
+      <div class="brand">
+        <div class="brand-mark">G</div>
+        <div class="brand-text">
+          <span class="brand-name">Grove</span>
+          <span class="brand-sub">Personal Finance</span>
+        </div>
+      </div>
+      <nav class="landing-nav">
+        <a href="#picture">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="learn.html">Grove Learn</a>
+        <a href="#about">About</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="landing-actions">
+        <button class="btn btn-ghost" data-open-auth="signin" style="display:none" id="desktop-signin">Sign in</button>
+        <button class="btn btn-outline" data-open-auth="signin">Sign in</button>
+        <button class="btn btn-primary" data-open-auth="signup">Create account</button>
+        <button class="hamburger" id="hamburger-btn" aria-label="Open menu" aria-expanded="false">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-drawer" id="mobile-drawer">
+    <div class="mobile-drawer-backdrop" id="mobile-drawer-backdrop"></div>
+    <div class="mobile-drawer-panel">
+      <button class="btn-icon mobile-drawer-close" id="mobile-drawer-close" aria-label="Close menu">✕</button>
+      <a href="#picture" class="drawer-link">Features</a>
+      <a href="#how-it-works" class="drawer-link">How it works</a>
+      <a href="learn.html" class="drawer-link">Grove Learn</a>
+      <a href="#about" class="drawer-link">About</a>
+      <a href="#faq" class="drawer-link">FAQ</a>
+      <button data-open-auth="signin">Sign in</button>
+      <button data-open-auth="signup">Create account</button>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="eyebrow-plain">Personal finance, organized</div>
+        <h1>A clearer picture of your money.</h1>
+        <p class="hero-sub">Grove helps you track your money, plan your spending, build savings goals, and understand your financial progress in one simple place.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-open-auth="signup">Create your account</button>
+          <a href="#how-it-works" class="btn btn-outline">See how Grove works →</a>
+        </div>
+      </div>
+      <div class="hero-preview">
+        <div class="hp-topline">
+          <div class="hp-dots"><span></span><span></span><span></span></div>
+          <span class="hp-tag">GROVE DASHBOARD</span>
+        </div>
+        <div class="hp-cards">
+          <div class="hp-card"><div class="hp-label">Balance</div><div class="hp-value">₵4,280</div></div>
+          <div class="hp-card"><div class="hp-label">Savings rate</div><div class="hp-value">22%</div></div>
+        </div>
+        <div class="hp-chart">
+          <i style="height:40%"></i><i style="height:65%"></i><i style="height:30%"></i>
+          <i style="height:80%"></i><i style="height:50%"></i><i style="height:70%"></i><i style="height:45%"></i>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="picture">
+    <div class="container">
+      <div class="section-head">
+        <h2>Your financial picture</h2>
+        <p class="section-sub">Everything you need to understand where you stand.</p>
+      </div>
+      <div class="picture-grid">
+        <div class="picture-card">
+          <svg class="pc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18M7 15h4"/></svg>
+          <h3>Balance</h3><p>See your current recorded balance at a glance.</p>
+        </div>
+        <div class="picture-card">
+          <svg class="pc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 19V5m0 14l5-5m-5 5l-5-5"/><path d="M20 5v14m0-14l-5 5m5-5l5 5" transform="translate(-4)"/></svg>
+          <h3>Income &amp; expenses</h3><p>Track what comes in and what goes out.</p>
+        </div>
+        <div class="picture-card">
+          <svg class="pc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 13h6"/></svg>
+          <h3>Budget</h3><p>Plan spending by category and see how you're tracking.</p>
+        </div>
+        <div class="picture-card">
+          <svg class="pc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+          <h3>Savings goals</h3><p>Set targets and watch your progress build.</p>
+        </div>
+        <div class="picture-card">
+          <svg class="pc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 4v5c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V7l7-4z"/></svg>
+          <h3>Emergency fund</h3><p>Know how prepared you are for the unexpected.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head">
+        <h2>What Grove helps you do</h2>
+        <p class="section-sub">Organize your finances. Stay on top of your financial progress.</p>
+      </div>
+      <div class="helps-grid">
+        <div class="helps-card tint-sage">
+          <svg class="helps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 8h13M7 8l3-3M7 8l3 3M17 16H4M17 16l-3-3M17 16l-3 3"/></svg>
+          <h3>Track</h3><p>Record income and expenses as they happen, in one place.</p>
+        </div>
+        <div class="helps-card tint-gold">
+          <svg class="helps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 13h6"/></svg>
+          <h3>Plan</h3><p>Set budgets by category and see how spending compares.</p>
+        </div>
+        <div class="helps-card tint-moss">
+          <svg class="helps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>
+          <h3>Save</h3><p>Create savings goals and add to them as you go.</p>
+        </div>
+        <div class="helps-card tint-clay">
+          <svg class="helps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 4v5c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V7l7-4z"/></svg>
+          <h3>Prepare</h3><p>Build and track an emergency fund for the unexpected.</p>
+        </div>
+        <div class="helps-card tint-slate">
+          <svg class="helps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.5.4.8 1 .8 1.6v.5h5.4v-.5c0-.6.3-1.2.8-1.6A6 6 0 0012 3z"/></svg>
+          <h3>Understand</h3><p>Get factual insights based on your own recorded data.</p>
+        </div>
+        <div class="helps-card tint-stone">
+          <svg class="helps-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="12" width="8" height="9" rx="1.5"/><rect x="3" y="14" width="8" height="7" rx="1.5"/></svg>
+          <h3>Organize</h3><p>Keep balances, budgets, and goals together and current.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="section-head">
+        <h2>How Grove works</h2>
+        <p class="section-sub">Designed for simplicity, built for everyday financial management.</p>
+      </div>
+      <div class="steps-row">
+        <div class="step-card"><div class="step-num">1</div><h3>Create your account</h3><p>Set up your Grove account and begin organizing your finances in one place.</p></div>
+        <div class="step-card"><div class="step-num">2</div><h3>Organize your finances</h3><p>Record your transactions, manage your budgets, and track your financial goals in one.</p></div>
+        <div class="step-card"><div class="step-num">3</div><h3>Understand your progress</h3><p>Review your financial activity and gain a clearer view of your spending, savings, and overall progress.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container why-grid">
+      <div>
+        <div class="section-head" style="margin-bottom:20px;">
+          <h2>Why Grove</h2>
+          <p class="section-sub">Your money should be easier to understand.</p>
+        </div>
+        <div class="why-copy">
+          <p>Grove gives you a simple, organised way to keep track of your finances, understand where your money goes, and see your progress overtime</p>
+        </div>
+      </div>
+      <div class="why-points">
+        <div class="why-point"><h4>Simple</h4><p>A focused set of tools for managing your money without making things complicated.</p></div>
+        <div class="why-point"><h4>Clear</h4><p>See your numbers, spending, savings, and progress clearly, with the information you need presented in a simple and understandable way.</p></div>
+        <div class="why-point"><h4>Personal</h4><p>Grove works with the information you provide, giving you a personal view of your finances that reflects your own goals and progress.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container about-block">
+      <div class="about-kicker">Built as a personal project</div>
+      <h2 style="font-size:1.8rem; margin-bottom:14px;">Built with a simple goal: make personal finance clearer.</h2>
+      <p>Grove was created to provide a structured and practical way to organize, track, and understand your finances in one place.</p>
+      <p>It brings together tools for managing everyday finances, planning ahead, monitoring progress, and gaining a clearer view of your overall financial position.</p>
+      <p class="about-signature">Designed &amp; built by Laura Efe Badua Abban</p>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="faq">
+    <div class="container">
+      <div class="section-head"><h2>Frequently asked</h2></div>
+      <div class="faq-carousel" id="faq-carousel" role="region" aria-roledescription="carousel" aria-label="Frequently asked questions" tabindex="0">
+        <div class="faq-slide-wrap" id="faq-slide-wrap"></div>
+        <div class="faq-controls">
+          <button class="btn-icon" id="faq-prev" aria-label="Previous question">‹</button>
+          <div class="faq-dots" id="faq-dots"></div>
+          <button class="btn-icon" id="faq-next" aria-label="Next question">›</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-dark final-cta">
+    <div class="container">
+      <h2>Start with Grove</h2>
+      <p class="section-sub">Your money deserves a clearer picture.</p>
+      <div class="cta-actions">
+        <button class="btn btn-gold" data-open-auth="signup">Create your account</button>
+      </div>
+      <p class="cta-secondary">Already have an account? <button data-open-auth="signin">Sign in</button></p>
+    </div>
+  </section>
+
+  <footer class="landing-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="brand-mark">G</div>
+        <div class="brand-text">
+          <span class="brand-name">Grove</span>
+          <span class="brand-sub" style="color:rgba(244,238,224,0.55)">Personal Finance</span>
+        </div>
+      </div>
+      <nav class="footer-nav">
+        <a href="#picture">Features</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="#about">About</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div class="footer-bottom">
+        <span>© 2026 Grove. All rights reserved.</span>
+        <span>A personal project, built by Laura Efe Badua Abban.</span>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     AUTHENTICATION OVERLAY
+============================================================ -->
+<div class="auth-overlay hidden" id="auth-overlay">
+  <div class="auth-card">
+    <button class="btn-icon auth-close" id="auth-overlay-close" aria-label="Close">✕</button>
+    <div class="auth-brand">
+      <div class="brand-mark">G</div>
+      <div class="brand-text"><span class="brand-name">Grove</span><span class="brand-sub">Personal Finance</span></div>
+    </div>
+
+    <!-- Sign in -->
+    <div class="auth-panel is-active" data-panel="signin">
+      <h2>Welcome back</h2>
+      <p class="auth-sub">Sign in to continue to Grove.</p>
+      <div class="auth-error-banner" id="signin-error"></div>
+      <form id="signin-form" novalidate>
+        <div class="field"><label for="signin-email">Email</label><input type="email" id="signin-email" autocomplete="email" required></div>
+        <div class="field"><label for="signin-password">Password</label>
+          <div class="password-field">
+            <input type="password" id="signin-password" autocomplete="current-password" required>
+            <button type="button" class="password-toggle" data-toggle-password="signin-password" aria-label="Show password" aria-pressed="false">👁</button>
+          </div>
+        </div>
+        <div class="auth-row-between">
+          <span></span>
+          <button type="button" class="btn-text" data-open-auth="forgot">Forgot password?</button>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+      </form>
+      <p class="auth-foot">Don't have an account? <button class="btn-text" data-open-auth="signup">Create one</button></p>
+    </div>
+
+    <!-- Create account -->
+    <div class="auth-panel" data-panel="signup">
+      <h2>Create your account</h2>
+      <p class="auth-sub">Start organizing your finances with Grove.</p>
+      <div class="auth-error-banner" id="signup-error"></div>
+      <form id="signup-form" novalidate>
+        <div class="field"><label for="signup-name">Name</label><input type="text" id="signup-name" autocomplete="name" placeholder="Laura Efe Abban" required></div>
+        <div class="field"><label for="signup-email">Email</label><input type="email" id="signup-email" autocomplete="email" placeholder="you@example.com" required></div>
+        <div class="field">
+          <label for="signup-password">Password</label>
+          <div class="password-field">
+            <input type="password" id="signup-password" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-toggle-password="signup-password" aria-label="Show password" aria-pressed="false">👁</button>
+          </div>
+          <ul class="password-checklist" id="password-checklist">
+            <li data-rule="length">At least 12 characters</li>
+            <li data-rule="upper">One uppercase letter</li>
+            <li data-rule="lower">One lowercase letter</li>
+            <li data-rule="number">One number</li>
+            <li data-rule="special">One special character</li>
+          </ul>
+        </div>
+        <div class="field"><label for="signup-confirm">Confirm password</label>
+          <div class="password-field">
+            <input type="password" id="signup-confirm" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-toggle-password="signup-confirm" aria-label="Show password" aria-pressed="false">👁</button>
+          </div>
+          <div class="field-error" id="signup-confirm-error">Passwords do not match.</div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Create account</button>
+      </form>
+      <p class="auth-foot">Already have an account? <button class="btn-text" data-open-auth="signin">Sign in</button></p>
+    </div>
+
+    <!-- Forgot password -->
+    <div class="auth-panel" data-panel="forgot">
+      <h2>Reset your password</h2>
+      <p class="auth-sub">Enter the email on your account and we'll send a verification code.</p>
+      <div class="auth-error-banner" id="forgot-error"></div>
+      <form id="forgot-form" novalidate>
+        <div class="field"><label for="forgot-email">Email</label><input type="email" id="forgot-email" required></div>
+        <button type="submit" class="btn btn-primary btn-block">Send code</button>
+      </form>
+      <p class="auth-foot"><button class="btn-text" data-open-auth="signin">Back to sign in</button></p>
+    </div>
+
+    <!-- Verify code -->
+    <div class="auth-panel" data-panel="verify">
+      <h2>Enter verification code</h2>
+      <p class="auth-sub">We generated a 6-digit code — for this prototype, check your browser console.</p>
+      <div class="auth-error-banner" id="verify-error"></div>
+      <form id="verify-form" novalidate>
+        <div class="code-inputs">
+          <input type="text" inputmode="numeric" maxlength="1" class="code-digit">
+          <input type="text" inputmode="numeric" maxlength="1" class="code-digit">
+          <input type="text" inputmode="numeric" maxlength="1" class="code-digit">
+          <input type="text" inputmode="numeric" maxlength="1" class="code-digit">
+          <input type="text" inputmode="numeric" maxlength="1" class="code-digit">
+          <input type="text" inputmode="numeric" maxlength="1" class="code-digit">
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Verify code</button>
+      </form>
+      <p class="auth-foot"><button class="btn-text" data-open-auth="forgot">Back</button></p>
+    </div>
+
+    <!-- Reset password -->
+    <div class="auth-panel" data-panel="reset">
+      <h2>Create a new password</h2>
+      <p class="auth-sub">Choose a new password for your account.</p>
+      <div class="auth-error-banner" id="reset-error"></div>
+      <form id="reset-form" novalidate>
+        <div class="field">
+          <label for="reset-password">New password</label>
+          <div class="password-field">
+            <input type="password" id="reset-password" required>
+            <button type="button" class="password-toggle" data-toggle-password="reset-password" aria-label="Show password" aria-pressed="false">👁</button>
+          </div>
+          <ul class="password-checklist" id="reset-password-checklist">
+            <li data-rule="length">At least 12 characters</li>
+            <li data-rule="upper">One uppercase letter</li>
+            <li data-rule="lower">One lowercase letter</li>
+            <li data-rule="number">One number</li>
+            <li data-rule="special">One special character</li>
+          </ul>
+        </div>
+        <div class="field"><label for="reset-confirm">Confirm new password</label>
+          <div class="password-field">
+            <input type="password" id="reset-confirm" required>
+            <button type="button" class="password-toggle" data-toggle-password="reset-confirm" aria-label="Show password" aria-pressed="false">👁</button>
+          </div>
+          <div class="field-error" id="reset-confirm-error">Passwords do not match.</div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Reset password</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     GROVE APPLICATION SHELL
+============================================================ -->
+<div id="app-shell">
+
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <div class="brand-mark" style="background:var(--gold); color:var(--forest-deep);">G</div>
+      <div class="brand-text"><span class="brand-name">Grove</span><span class="brand-sub">Personal Finance</span></div>
+    </div>
+   <nav class="sidebar-nav" id="sidebar-nav">
+  <button class="nav-item" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="12" width="8" height="9" rx="1.5"/><rect x="3" y="14" width="8" height="7" rx="1.5"/></svg>Dashboard</button>
+
+  <button class="nav-item" data-view="overview"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19V9m6 10V5m6 14v-7"/></svg>Overview</button>
+
+  <button class="nav-item" data-view="transactions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M7 8h13M7 8l3-3M7 8l3 3M17 16H4M17 16l-3-3M17 16l-3 3"/></svg>Transactions</button>
+
+  <button class="nav-item" data-view="budgets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 13h6"/></svg>Budgets</button>
+
+  <button class="nav-item" data-view="goals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>Savings Goals</button>
+
+  <button class="nav-item" data-view="emergency"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 4v5c0 5-3.5 7.5-7 9-3.5-1.5-7-4-7-9V7l7-4z"/></svg>Emergency Fund</button>
+
+  <button class="nav-item" data-view="networth"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg>Net Worth</button>
+
+  <button class="nav-item" data-view="recurring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M17 2.1l4 4-4 4M3 12.1v-2a4 4 0 014-4h14M7 21.9l-4-4 4-4M21 11.9v2a4 4 0 01-4 4H3"/></svg>Recurring Transactions</button>
+
+  <button class="nav-item" data-view="bills"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>Bills &amp; Subscriptions</button>
+
+  <button class="nav-item" data-view="calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Calendar</button>
+
+  <button class="nav-item" data-view="reports"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 19h16M8 19V9m5 10V5m5 14v-7"/></svg>Reports</button>
+
+  <button class="nav-item" data-view="insights"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 18h6M10 21h4M12 3a6 6 0 00-3.5 10.9c.5.4.8 1 .8 1.6v.5h5.4v-.5c0-.6.3-1.2.8-1.6A6 6 0 0012 3z"/></svg>Insights</button>
+
+  <button class="nav-item" data-view="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 11-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 110-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.6a1.65 1.65 0 001-1.51V3a2 2 0 114 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06-.06A1.65 1.65 0 0019.4 9c.23.5.7.83 1.24.83H21a2 2 0 110 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>Settings</button>
+</nav>
+    <div class="sidebar-foot">Grove is a tracking tool, not a bank.</div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <div class="topbar-left">
+        <button class="btn-icon mobile-only" id="app-hamburger" aria-label="Open navigation">☰</button>
+        <div class="brand" style="gap:8px;">
+          <div class="brand-mark" style="width:28px;height:28px;font-size:0.9rem;">G</div>
+          <span class="brand-name" style="font-size:1rem;">Grove</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="currency-picker">
+          <button class="currency-toggle" id="currency-toggle"><span id="currency-toggle-symbol">₵</span><span>⌄</span></button>
+          <div class="currency-menu" id="currency-menu"></div>
+        </div>
+        <button class="btn btn-gold btn-sm" id="quick-add-btn">+ Add transaction</button>
+      </div>
+    </header>
+
+    <!-- DASHBOARD -->
+    <section class="view is-active" data-view="dashboard">
+      <div class="view-head">
+        <div><h1>Dashboard</h1><p class="view-sub">A clear picture of your money.</p></div>
+        <button class="btn btn-primary" data-quick-add>+ Add transaction</button>
+      </div>
+      <div class="motivation-banner hidden" id="dash-motivation">
+        <div class="motivation-title" id="dash-motivation-title"></div>
+        <div class="motivation-sub" id="dash-motivation-sub"></div>
+      </div>
+      <div class="alert-stack" id="dash-alerts"></div>
+      <div class="summary-grid">
+        <div class="summary-card"><div class="sc-label">Balance</div><div class="sc-value" id="dash-balance">₵0</div><div class="sc-sub">Current recorded balance</div></div>
+        <div class="summary-card"><div class="sc-label">Income</div><div class="sc-value" id="dash-income">₵0</div><div class="sc-sub">Total recorded income</div></div>
+        <div class="summary-card"><div class="sc-label">Expenses</div><div class="sc-value" id="dash-expenses">₵0</div><div class="sc-sub">Total recorded expenses</div></div>
+        <div class="summary-card"><div class="sc-label">Savings rate</div><div class="sc-value" id="dash-savings-rate">0%</div><div class="sc-sub">Income retained after expenses</div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>Spending by category</h3></div>
+          <div id="dash-spending-empty" class="empty-state hidden"><h4>No spending recorded yet.</h4><p>Add an expense to see your spending breakdown.</p></div>
+          <div class="chart-wrap" id="dash-spending-chart-wrap">
+            <canvas id="dash-spending-chart"></canvas>
+          </div>
+          <div class="chart-legend" id="dash-spending-legend"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Grove Daily</h3></div>
+          <div id="dash-insights-empty" class="empty-state hidden"><h4>No insights yet.</h4><p>Add some activity to see insights here.</p></div>
+          <div class="insight-list" id="dash-insights-list"></div>
+        </div>
+      </div>
+      <div class="dash-grid" id="dash-snapshot-row">
+        <div class="panel">
+          <div class="panel-head"><h3>Net worth</h3><button class="btn-text" data-view-link="networth">View</button></div>
+          <div class="snapshot-figure" id="dash-net-worth">₵0</div>
+          <div class="snapshot-sub">Total assets minus liabilities</div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Upcoming bills</h3><button class="btn-text" data-view-link="bills">View</button></div>
+          <div id="dash-bills-empty" class="empty-state hidden" style="padding:24px 16px;"><h4>No bills yet.</h4><p>Add a bill to see it here.</p></div>
+          <div id="dash-bills-list"></div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Recent transactions</h3><button class="btn-text" data-view-link="transactions">View all</button></div>
+        <div id="dash-tx-empty" class="empty-state hidden"><h4>No transactions yet.</h4><p>Add your first transaction to start tracking your money.</p><button class="btn btn-primary btn-sm" data-quick-add>+ Add transaction</button></div>
+        <div id="dash-tx-list"></div>
+      </div>
+    </section>
+
+    <!-- TRANSACTIONS -->
+    <section class="view" data-view="transactions">
+      <div class="view-head">
+        <div><h1>Transactions</h1><p class="view-sub">Every recorded transaction, in one place.</p></div>
+        <button class="btn btn-primary" data-quick-add>+ Add transaction</button>
+      </div>
+      <div class="toolbar">
+        <input type="search" id="tx-search" placeholder="Search transactions…">
+        <select id="tx-filter-type"><option value="">All types</option><option value="income">Income</option><option value="expense">Expense</option></select>
+        <select id="tx-filter-category"><option value="">All categories</option></select>
+        <select id="tx-filter-month"><option value="">All months</option></select>
+      </div>
+      <div id="tx-empty" class="empty-state hidden"><h4>No transactions yet.</h4><p>Add your first transaction to start tracking your money.</p><button class="btn btn-primary btn-sm" data-quick-add>+ Add transaction</button></div>
+      <div id="tx-no-results" class="empty-state hidden"><h4>No matching transactions.</h4><p>Try adjusting your search or filters.</p></div>
+      <div class="table-panel hidden" id="tx-table-panel">
+        <table class="tx-table">
+          <thead><tr><th>Description</th><th>Category</th><th>Date</th><th>Amount</th><th></th></tr></thead>
+          <tbody id="tx-table-body"></tbody>
+        </table>
+        <div class="tx-table-mobile" id="tx-table-mobile"></div>
+      </div>
+    </section>
+
+    <!-- BUDGETS -->
+    <section class="view" data-view="budgets">
+      <div class="view-head">
+        <div><h1>Budgets</h1><p class="view-sub">Plan spending by category.</p></div>
+        <button class="btn btn-primary" id="add-budget-btn">+ Add budget</button>
+      </div>
+      <div class="alert-stack" id="budgets-alerts"></div>
+      <div id="budgets-empty" class="empty-state hidden"><h4>No budgets yet.</h4><p>Create a budget to plan your spending.</p><button class="btn btn-primary btn-sm" id="add-budget-btn-2">+ Add budget</button></div>
+      <div class="card-grid" id="budgets-grid"></div>
+    </section>
+
+    <!-- SAVINGS GOALS -->
+    <section class="view" data-view="goals">
+      <div class="view-head">
+        <div><h1>Savings Goals</h1><p class="view-sub">Set targets and track your progress.</p></div>
+        <button class="btn btn-primary" id="add-goal-btn">+ Add goal</button>
+      </div>
+      <div id="goals-empty" class="empty-state hidden"><h4>No savings goals yet.</h4><p>Create a goal and start tracking your progress.</p><button class="btn btn-primary btn-sm" id="add-goal-btn-2">+ Add goal</button></div>
+      <div class="card-grid" id="goals-grid"></div>
+    </section>
+
+    <!-- EMERGENCY FUND -->
+    <section class="view" data-view="emergency">
+      <div class="view-head">
+        <div><h1>Emergency Fund</h1><p class="view-sub">Track how prepared you are for the unexpected.</p></div>
+        <div class="view-head-actions" style="display:flex;gap:10px;">
+          <button class="btn btn-primary" id="edit-ef-btn">Edit fund</button>
+          <button class="btn btn-outline hidden" id="delete-ef-btn" aria-label="Delete emergency fund">🗑 Delete</button>
+        </div>
+      </div>
+      <div id="ef-empty" class="empty-state hidden"><h4>No emergency fund target yet.</h4><p>Set a target to start tracking your progress.</p><button class="btn btn-primary btn-sm" id="edit-ef-btn-2">Set target</button></div>
+      <div id="ef-content" class="hidden">
+        <div class="ef-hero">
+          <div class="ef-figure"><div class="ef-label">Current fund</div><div class="ef-value" id="ef-current">₵0</div></div>
+          <div class="ef-figure"><div class="ef-label">Target</div><div class="ef-value" id="ef-target">₵0</div></div>
+        </div>
+        <div class="panel">
+          <div class="ef-progress-track"><div class="ef-progress-fill" id="ef-progress-fill" style="width:0%"></div></div>
+          <div class="ef-pct" id="ef-pct">0% complete</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="view" data-view="overview">
+      <div class="view-head"><div><h1>Overview</h1><p class="view-sub">The broader picture of your finances.</p></div></div>
+      <div class="summary-grid">
+        <div class="summary-card"><div class="sc-label">Total balance</div><div class="sc-value" id="ov-balance">₵0</div></div>
+        <div class="summary-card"><div class="sc-label">Total income</div><div class="sc-value" id="ov-income">₵0</div></div>
+        <div class="summary-card"><div class="sc-label">Total expenses</div><div class="sc-value" id="ov-expenses">₵0</div></div>
+        <div class="summary-card"><div class="sc-label">Savings goal progress</div><div class="sc-value" id="ov-goals-pct">0%</div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>Income vs expenses</h3></div>
+          <div id="ov-ie-empty" class="empty-state hidden"><h4>No data yet.</h4><p>Add transactions to see this chart.</p></div>
+          <div class="chart-wrap" id="ov-ie-wrap"><canvas id="ov-ie-chart"></canvas></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Spending by category</h3></div>
+          <div id="ov-cat-empty" class="empty-state hidden"><h4>No spending recorded yet.</h4></div>
+          <div class="chart-wrap" id="ov-cat-wrap"><canvas id="ov-cat-chart"></canvas></div>
+          <div class="chart-legend" id="ov-cat-legend"></div>
+        </div>
+      </div>
+      <div class="panel" style="margin-bottom:20px;">
+        <div class="panel-head"><h3>Savings goal progress</h3></div>
+        <div id="ov-goals-empty" class="empty-state hidden"><h4>No savings goals yet.</h4><p>Create a goal to see progress here.</p></div>
+        <div id="ov-goals-list" class="ov-goals-list"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3>Recent activity</h3></div>
+        <div id="ov-activity-empty" class="empty-state hidden"><h4>No transactions yet.</h4></div>
+        <div id="ov-activity-list"></div>
+      </div>
+    </section>
+
+    <!-- INSIGHTS -->
+    <section class="view" data-view="insights">
+      <div class="view-head"><div><h1>Insights</h1><p class="view-sub">Factual observations based on your recorded data.</p></div></div>
+      <div id="insights-empty" class="empty-state hidden"><h4>Add some financial activity to start seeing insights.</h4><p>Record transactions, budgets, and goals to unlock insights.</p></div>
+      <div class="card-grid" id="insights-grid"></div>
+    </section>
+
+    <!-- NET WORTH -->
+    <section class="view" data-view="networth">
+      <div class="view-head">
+        <div><h1>Net Worth</h1><p class="view-sub">Total assets minus liabilities.</p></div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+          <button class="btn btn-outline" id="add-liability-btn">+ Add liability</button>
+          <button class="btn btn-primary" id="add-asset-btn">+ Add asset</button>
+        </div>
+      </div>
+      <div class="summary-grid cols-3">
+        <div class="summary-card"><div class="sc-label">Total assets</div><div class="sc-value" id="nw-total-assets">₵0</div></div>
+        <div class="summary-card"><div class="sc-label">Total liabilities</div><div class="sc-value" id="nw-total-liabilities">₵0</div></div>
+        <div class="summary-card"><div class="sc-label">Net worth</div><div class="sc-value" id="nw-net-worth">₵0</div></div>
+      </div>
+      <div class="panel" style="margin-bottom:20px;">
+        <div class="panel-head"><h3>Net worth over time</h3></div>
+        <div id="nw-chart-empty" class="empty-state hidden"><h4>Not enough history yet.</h4><p>Add or update assets and liabilities on different days to build your net worth trend.</p></div>
+        <div class="chart-wrap" id="nw-chart-wrap"><canvas id="nw-chart"></canvas></div>
+      </div>
+      <div class="dash-grid">
+        <div class="panel">
+          <div class="panel-head"><h3>Assets</h3></div>
+          <div id="nw-assets-empty" class="empty-state hidden"><h4>No assets yet.</h4><p>Add cash, savings, investments and more.</p><button class="btn btn-primary btn-sm" id="add-asset-btn-2">+ Add asset</button></div>
+          <div id="nw-assets-list"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Liabilities</h3></div>
+          <div id="nw-liabilities-empty" class="empty-state hidden"><h4>No liabilities yet.</h4><p>Add loans, credit or other debts.</p><button class="btn btn-outline btn-sm" id="add-liability-btn-2">+ Add liability</button></div>
+          <div id="nw-liabilities-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECURRING TRANSACTIONS -->
+    <section class="view" data-view="recurring">
+      <div class="view-head">
+        <div><h1>Recurring Transactions</h1><p class="view-sub">Income and expenses that repeat on a schedule.</p></div>
+        <button class="btn btn-primary" id="add-recurring-btn">+ Add recurring</button>
+      </div>
+      <div id="recurring-empty" class="empty-state hidden"><h4>No recurring transactions yet.</h4><p>Add salary, rent, subscriptions and other repeating items.</p><button class="btn btn-primary btn-sm" id="add-recurring-btn-2">+ Add recurring</button></div>
+      <div class="card-grid" id="recurring-grid"></div>
+    </section>
+
+    <!-- BILLS & SUBSCRIPTIONS -->
+    <section class="view" data-view="bills">
+      <div class="view-head">
+        <div><h1>Bills &amp; Subscriptions</h1><p class="view-sub">Track upcoming financial obligations.</p></div>
+        <button class="btn btn-primary" id="add-bill-btn">+ Add bill</button>
+      </div>
+      <div class="summary-grid">
+        <div class="summary-card"><div class="sc-label">Upcoming</div><div class="sc-value" id="bills-sum-upcoming">0</div></div>
+        <div class="summary-card"><div class="sc-label">Due soon</div><div class="sc-value" id="bills-sum-due-soon">0</div></div>
+        <div class="summary-card"><div class="sc-label">Overdue</div><div class="sc-value" id="bills-sum-overdue">0</div></div>
+        <div class="summary-card"><div class="sc-label">Monthly subscription cost</div><div class="sc-value" id="bills-sum-monthly">₵0</div></div>
+      </div>
+      <div id="bills-empty" class="empty-state hidden"><h4>No bills yet.</h4><p>Add rent, utilities, subscriptions and other bills.</p><button class="btn btn-primary btn-sm" id="add-bill-btn-2">+ Add bill</button></div>
+      <div class="table-panel hidden" id="bills-table-panel">
+        <table class="tx-table">
+          <thead><tr><th>Bill</th><th>Category</th><th>Due date</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+          <tbody id="bills-table-body"></tbody>
+        </table>
+        <div class="tx-table-mobile" id="bills-table-mobile"></div>
+      </div>
+    </section>
+
+    <!-- FINANCIAL REPORTS -->
+    <section class="view" data-view="reports">
+      <div class="view-head">
+        <div><h1>Reports</h1><p class="view-sub">Analysis built from your actual recorded data.</p></div>
+        <div class="report-export-actions">
+  <button class="btn btn-outline btn-sm" id="report-export-btn">Export Excel</button>
+  <button class="btn btn-outline btn-sm" id="report-export-pdf-btn">Export PDF</button>
+</div>
+      </div>
+      <div class="toolbar">
+        <div class="type-toggle" id="report-period-toggle" style="max-width:520px;">
+          <button type="button" class="is-active" data-report-period="this-month">This month</button>
+          <button type="button" data-report-period="last-month">Last month</button>
+          <button type="button" data-report-period="this-year">This year</button>
+          <button type="button" data-report-period="custom">Custom</button>
+        </div>
+      </div>
+      <div class="toolbar hidden" id="report-custom-range">
+        <div class="field" style="margin:0;"><label for="report-start">From</label><input type="date" id="report-start"></div>
+        <div class="field" style="margin:0;"><label for="report-end">To</label><input type="date" id="report-end"></div>
+        <button class="btn btn-outline btn-sm" id="report-apply-custom">Apply</button>
+      </div>
+      <div id="rep-empty" class="empty-state hidden"><h4>No data for this period.</h4><p>Add transactions to see reports here.</p></div>
+      <div id="rep-content">
+        <div class="summary-grid cols-3">
+          <div class="summary-card"><div class="sc-label">Total income</div><div class="sc-value" id="rep-income">₵0</div></div>
+          <div class="summary-card"><div class="sc-label">Total expenses</div><div class="sc-value" id="rep-expenses">₵0</div></div>
+          <div class="summary-card"><div class="sc-label">Net cash flow</div><div class="sc-value" id="rep-net-flow">₵0</div></div>
+          <div class="summary-card"><div class="sc-label">Savings</div><div class="sc-value" id="rep-savings">₵0</div></div>
+          <div class="summary-card"><div class="sc-label">Savings rate</div><div class="sc-value" id="rep-savings-rate">0%</div></div>
+          <div class="summary-card"><div class="sc-label">Largest category</div><div class="sc-value" id="rep-largest-category" style="font-size:1.15rem;">—</div></div>
+        </div>
+        <div class="dash-grid">
+          <div class="panel">
+            <div class="panel-head"><h3>Income vs expenses</h3></div>
+            <div class="chart-wrap" id="rep-ie-wrap"><canvas id="rep-ie-chart"></canvas></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><h3>Spending by category</h3></div>
+            <div id="rep-cat-empty" class="empty-state hidden"></div>
+            <div class="chart-wrap" id="rep-cat-wrap"><canvas id="rep-cat-chart"></canvas></div>
+            <div class="chart-legend" id="rep-cat-legend"></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>Spending trend</h3></div>
+          <div id="rep-trend-empty" class="empty-state hidden"><h4>Not enough data yet.</h4><p>Spending trends need transactions across more than one period.</p></div>
+          <div class="chart-wrap" id="rep-trend-wrap"><canvas id="rep-trend-chart"></canvas></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINANCIAL CALENDAR -->
+    <section class="view" data-view="calendar">
+      <div class="view-head">
+        <div><h1>Financial Calendar</h1><p class="view-sub">Bills, recurring income and expenses in one place.</p></div>
+        <div class="cal-nav">
+          <button class="btn-icon" id="cal-prev-btn" aria-label="Previous month">‹</button>
+          <span id="cal-month-label" class="cal-month-label"></span>
+          <button class="btn-icon" id="cal-next-btn" aria-label="Next month">›</button>
+        </div>
+      </div>
+      <div class="panel" style="margin-bottom:20px;">
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h3 id="cal-events-title">Events</h3></div>
+        <div id="cal-events-empty" class="empty-state hidden"><h4>No scheduled events.</h4><p>Bills and recurring transactions will appear here once added.</p></div>
+        <div id="cal-events-list"></div>
+      </div>
+    </section>
+
+    <!-- SETTINGS -->
+    <section class="view" data-view="settings">
+      <div class="view-head"><div><h1>Settings</h1><p class="view-sub">Manage your account and preferences.</p></div></div>
+
+      <div class="settings-section">
+        <h3>Account</h3>
+        <p class="settings-sub">Your Grove account details.</p>
+        <div class="settings-row"><span class="sr-label">Name</span><span class="sr-value" id="settings-name">—</span></div>
+        <div class="settings-row"><span class="sr-label">Email</span><span class="sr-value" id="settings-email">—</span></div>
+        <div class="settings-row"><span class="sr-label"></span><button class="btn btn-outline btn-sm" id="signout-btn">Sign out</button></div>
+      </div>
+
+      <div class="settings-section">
+        <h3>Currency</h3>
+        <p class="settings-sub">Choose the currency used to display your amounts.</p>
+        <div class="currency-grid" id="settings-currency-grid"></div>
+      </div>
+
+            <div class="settings-section">
+        <h3>Appearance</h3>
+        <p class="settings-sub">Choose how Grove looks on your device.</p>
+
+        <div class="appearance-options">
+          <button class="appearance-option" id="theme-light" type="button">
+            <span class="appearance-icon">☀</span>
+            <span>
+              <strong>Light</strong>
+              <small>Clean and bright</small>
+            </span>
+          </button>
+
+          <button class="appearance-option" id="theme-dark" type="button">
+            <span class="appearance-icon">☾</span>
+            <span>
+              <strong>Dark</strong>
+              <small>Easy on the eyes</small>
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <div class="settings-section">
+        <h3>About Grove</h3>
+        <p class="settings-sub">Grove · Personal Finance</p>
+        <p style="font-size:0.9rem; color:var(--ink-soft); line-height:1.6;">Grove is a personal finance organization tool. It helps you record income and expenses, plan budgets, and track savings goals, all stored locally on this device. Grove is not a bank and does not move or hold money.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <nav class="bottom-nav" id="bottom-nav">
+    <button class="bottom-nav-item" data-view="dashboard"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="1.5"/><rect x="13" y="3" width="8" height="5" rx="1.5"/><rect x="13" y="12" width="8" height="9" rx="1.5"/><rect x="3" y="14" width="8" height="7" rx="1.5"/></svg>Home</button>
+    <button class="bottom-nav-item" data-view="transactions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 8h13M7 8l3-3M7 8l3 3M17 16H4M17 16l-3-3M17 16l-3 3"/></svg>Activity</button>
+    <button class="bottom-nav-item" data-view="budgets"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 13h6"/></svg>Budgets</button>
+    <button class="bottom-nav-item" data-view="goals"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="0.8" fill="currentColor"/></svg>Goals</button>
+    <button class="bottom-nav-item" data-view="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82"/></svg>More</button>
+  </nav>
+
+  <div class="mobile-drawer" id="app-mobile-drawer">
+    <div class="mobile-drawer-backdrop" id="app-drawer-backdrop"></div>
+    <div class="mobile-drawer-panel">
+      <button class="btn-icon mobile-drawer-close" id="app-drawer-close" aria-label="Close menu">✕</button>
+      <button class="drawer-nav-item" data-view="dashboard">Dashboard</button>
+      <button class="drawer-nav-item" data-view="transactions">Transactions</button>
+      <button class="drawer-nav-item" data-view="budgets">Budgets</button>
+      <button class="drawer-nav-item" data-view="goals">Savings Goals</button>
+      <button class="drawer-nav-item" data-view="emergency">Emergency Fund</button>
+      <button class="drawer-nav-item" data-view="overview">Overview</button>
+      <button class="drawer-nav-item" data-view="insights">Insights</button>
+      <button class="drawer-nav-item" data-view="networth">Net Worth</button>
+      <button class="drawer-nav-item" data-view="recurring">Recurring</button>
+      <button class="drawer-nav-item" data-view="bills">Bills</button>
+      <button class="drawer-nav-item" data-view="reports">Reports</button>
+      <button class="drawer-nav-item" data-view="calendar">Calendar</button>
+      <button class="drawer-nav-item" data-view="settings">Settings</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     MODALS
+============================================================ -->
+<div class="modal-overlay" id="tx-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="tx-modal-title">Add transaction</h3><button class="btn-icon" data-close-modal="tx-modal-overlay">✕</button></div>
+    <div class="type-toggle">
+      <button type="button" class="is-active income" data-tx-type="income">Income</button>
+      <button type="button" class="expense" data-tx-type="expense">Expense</button>
+    </div>
+    <form id="tx-form" novalidate>
+      <input type="hidden" id="tx-id">
+      <div class="field"><label for="tx-description">Description</label><input type="text" id="tx-description" required><div class="field-error">Description is required.</div></div>
+      <div class="field-grid-2">
+        <div class="field"><label for="tx-amount">Amount</label><input type="number" id="tx-amount" min="0.01" step="0.01" required><div class="field-error">Enter an amount greater than zero.</div></div>
+        <div class="field"><label for="tx-date">Date</label><input type="date" id="tx-date" required><div class="field-error">Date is required.</div></div>
+      </div>
+      <div class="field"><label for="tx-category">Category</label><select id="tx-category" required></select><div class="field-error">Category is required.</div></div>
+      <div class="field"><label for="tx-note">Note (optional)</label><input type="text" id="tx-note"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="tx-modal-overlay">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="tx-submit-btn">Add transaction</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="budget-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3>Add budget</h3><button class="btn-icon" data-close-modal="budget-modal-overlay">✕</button></div>
+    <form id="budget-form" novalidate>
+      <div class="field"><label for="budget-category">Category</label><select id="budget-category" required></select></div>
+      <div class="field"><label for="budget-amount">Budget amount</label><input type="number" id="budget-amount" min="0.01" step="0.01" required></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="budget-modal-overlay">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save budget</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="goal-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3>Add savings goal</h3><button class="btn-icon" data-close-modal="goal-modal-overlay">✕</button></div>
+    <form id="goal-form" novalidate>
+      <div class="field"><label for="goal-name">Goal name</label><input type="text" id="goal-name" required></div>
+      <div class="field-grid-2">
+        <div class="field"><label for="goal-target">Target amount</label><input type="number" id="goal-target" min="0.01" step="0.01" required></div>
+        <div class="field"><label for="goal-current">Starting amount</label><input type="number" id="goal-current" min="0" step="0.01" value="0"></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="goal-modal-overlay">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save goal</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="contribution-modal-overlay">
+  <div class="modal modal-small">
+    <div class="modal-head"><h3>Add to goal</h3><button class="btn-icon" data-close-modal="contribution-modal-overlay">✕</button></div>
+    <form id="contribution-form" novalidate>
+      <input type="hidden" id="contribution-goal-id">
+      <div class="field"><label for="contribution-amount">Amount to add</label><input type="number" id="contribution-amount" min="0.01" step="0.01" required></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="contribution-modal-overlay">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="ef-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3>Emergency fund</h3><button class="btn-icon" data-close-modal="ef-modal-overlay">✕</button></div>
+    <form id="ef-form" novalidate>
+      <div class="field-grid-2">
+        <div class="field"><label for="ef-target-input">Target amount</label><input type="number" id="ef-target-input" min="0" step="0.01" required></div>
+        <div class="field"><label for="ef-current-input">Current amount</label><input type="number" id="ef-current-input" min="0" step="0.01" required></div>
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="ef-modal-overlay">Cancel</button>
+        <button type="submit" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="asset-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="asset-modal-title">Add asset</h3><button class="btn-icon" data-close-modal="asset-modal-overlay">✕</button></div>
+    <form id="asset-form" novalidate>
+      <input type="hidden" id="asset-id">
+      <input type="hidden" id="asset-kind" value="asset">
+      <div class="field"><label for="asset-name">Name</label><input type="text" id="asset-name" required></div>
+      <div class="field"><label for="asset-type">Type</label><select id="asset-type" required></select></div>
+      <div class="field"><label for="asset-amount">Amount</label><input type="number" id="asset-amount" min="0" step="0.01" required></div>
+      <div class="field"><label for="asset-note">Note (optional)</label><input type="text" id="asset-note"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="asset-modal-overlay">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="asset-submit-btn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="recurring-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="recurring-modal-title">Add recurring transaction</h3><button class="btn-icon" data-close-modal="recurring-modal-overlay">✕</button></div>
+    <div class="type-toggle">
+      <button type="button" class="is-active income" data-recurring-type="income">Income</button>
+      <button type="button" class="expense" data-recurring-type="expense">Expense</button>
+    </div>
+    <form id="recurring-form" novalidate>
+      <input type="hidden" id="recurring-id">
+      <div class="field"><label for="recurring-description">Name / description</label><input type="text" id="recurring-description" required></div>
+      <div class="field-grid-2">
+        <div class="field"><label for="recurring-amount">Amount</label><input type="number" id="recurring-amount" min="0.01" step="0.01" required></div>
+        <div class="field"><label for="recurring-category">Category</label><select id="recurring-category" required></select></div>
+      </div>
+      <div class="field-grid-2">
+        <div class="field"><label for="recurring-frequency">Frequency</label>
+          <select id="recurring-frequency">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly" selected>Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+        <div class="field"><label for="recurring-start">Start date</label><input type="date" id="recurring-start" required></div>
+      </div>
+      <div class="field"><label for="recurring-end">End date (optional)</label><input type="date" id="recurring-end"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="recurring-modal-overlay">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="recurring-submit-btn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="bill-modal-overlay">
+  <div class="modal">
+    <div class="modal-head"><h3 id="bill-modal-title">Add bill</h3><button class="btn-icon" data-close-modal="bill-modal-overlay">✕</button></div>
+    <form id="bill-form" novalidate>
+      <input type="hidden" id="bill-id">
+      <div class="field"><label for="bill-name">Name</label><input type="text" id="bill-name" required></div>
+      <div class="field-grid-2">
+        <div class="field"><label for="bill-amount">Amount</label><input type="number" id="bill-amount" min="0.01" step="0.01" required></div>
+        <div class="field"><label for="bill-category">Category</label><select id="bill-category" required></select></div>
+      </div>
+      <div class="field-grid-2">
+        <div class="field"><label for="bill-due">Due date</label><input type="date" id="bill-due" required></div>
+        <div class="field"><label for="bill-frequency">Frequency</label>
+          <select id="bill-frequency">
+            <option value="one-time">One-time</option>
+            <option value="weekly">Weekly</option>
+            <option value="monthly" selected>Monthly</option>
+            <option value="yearly">Yearly</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label for="bill-notes">Notes (optional)</label><input type="text" id="bill-notes"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-ghost" data-close-modal="bill-modal-overlay">Cancel</button>
+        <button type="submit" class="btn btn-primary" id="bill-submit-btn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-overlay" id="confirm-modal-overlay">
+  <div class="modal modal-small">
+    <div class="modal-head"><h3 id="confirm-modal-title">Delete this?</h3><button class="btn-icon" data-close-modal="confirm-modal-overlay">✕</button></div>
+    <p id="confirm-modal-body">This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button type="button" class="btn btn-ghost" data-close-modal="confirm-modal-overlay">Cancel</button>
+      <button type="button" class="btn btn-danger" id="confirm-modal-confirm">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="auth.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
