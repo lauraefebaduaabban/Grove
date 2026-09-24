@@ -7,7 +7,7 @@
 
 const supabaseClient = window.supabase.createClient(
   'https://ffqjtaoxiewkrgxrkiyw.supabase.co',
-  'PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE'
+  'sb_publishable_6B9yF8L6ahBd7q2Uc6ViEQ_igSt_NWH'
 );
 
 // Must match the Site URL / Redirect URL configured in the Supabase dashboard.
