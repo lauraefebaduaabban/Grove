@@ -2377,32 +2377,13 @@ function closeAuthOverlay() {
 }
 function showAuthPanel(panel) {
   document.querySelectorAll('.auth-panel').forEach(p => p.classList.toggle('is-active', p.dataset.panel === panel));
-  document.querySelectorAll('.auth-error-banner').forEach(b => {
-    b.classList.remove('is-visible', 'is-info');
-    b.style.color = '';
-    b.style.background = '';
-    b.textContent = '';
-  });
+  document.querySelectorAll('.auth-error-banner').forEach(b => { b.classList.remove('is-visible'); b.textContent = ''; });
 }
 function showAuthError(panel, message) {
   const el = document.getElementById(panel + '-error');
   if (!el) return;
-  el.classList.remove('is-info');
-  el.style.color = '';
-  el.style.background = '';
   el.textContent = message;
   el.classList.add('is-visible');
-}
-function showAuthMessage(panel, message) {
-  // Reuses the panel's existing error banner to show a non-error status
-  // message (e.g. "check your email"), styled neutrally instead of as an
-  // error so it doesn't read as something having gone wrong.
-  const el = document.getElementById(panel + '-error');
-  if (!el) return;
-  el.textContent = message;
-  el.classList.add('is-visible', 'is-info');
-  el.style.color = 'inherit';
-  el.style.background = 'transparent';
 }
 
 /* ---------------------------------------------------------------------
@@ -2436,18 +2417,10 @@ document.addEventListener('DOMContentLoaded', () => {
   snapshotNetWorth();
   saveState();
 
-  // session check — wait for Supabase's first session check to resolve.
-  // If the page was opened via a password-reset email link, Supabase
-  // establishes a recovery session and fires PASSWORD_RECOVERY instead of
-  // a normal sign-in, so we send the user to the reset panel rather than
-  // straight into the app.
-  GroveAuth.ready.then(() => {
-    if (GroveAuth.isPasswordRecovery()) {
-      openAuthOverlay('reset');
-    } else if (GroveAuth.currentUser()) {
-      enterApp();
-    }
-  });
+  // session check
+  if (GroveAuth.currentUser()) {
+    enterApp();
+  }
 
   /* ---- global click delegation ---- */
   document.body.addEventListener('click', (e) => {
@@ -2628,7 +2601,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // sign out
     if (e.target.closest('#signout-btn')) {
-      GroveAuth.signOut().then(exitToLanding);
+      GroveAuth.signOut();
+      exitToLanding();
       return;
     }
 
@@ -2659,66 +2633,53 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* ---- forms ---- */
-  document.getElementById('signin-form').addEventListener('submit', async (e) => {
+  document.getElementById('signin-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
-    const res = await GroveAuth.signIn({
+    const res = GroveAuth.signIn({
       email: document.getElementById('signin-email').value,
       password: document.getElementById('signin-password').value
     });
-    if (submitBtn) submitBtn.disabled = false;
     if (!res.ok) { showAuthError('signin', res.error); return; }
     enterApp();
   });
 
-  document.getElementById('signup-form').addEventListener('submit', async (e) => {
+  document.getElementById('signup-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
-    const res = await GroveAuth.signUp({
+    const res = GroveAuth.signUp({
       name: document.getElementById('signup-name').value,
       email: document.getElementById('signup-email').value,
       password: document.getElementById('signup-password').value,
       confirm: document.getElementById('signup-confirm').value
     });
-    if (submitBtn) submitBtn.disabled = false;
     if (!res.ok) { showAuthError('signup', res.error); return; }
-    if (res.needsConfirmation) {
-      document.getElementById('signup-form').reset();
-      showAuthPanel('signin');
-      showAuthMessage('signin', 'Check your email to confirm your account, then sign in below.');
-      return;
-    }
     enterApp();
   });
 
-  document.getElementById('forgot-form').addEventListener('submit', async (e) => {
+  document.getElementById('forgot-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
     const email = document.getElementById('forgot-email').value;
-    const res = await GroveAuth.requestReset(email);
-    if (submitBtn) submitBtn.disabled = false;
+    const res = GroveAuth.requestReset(email);
     if (!res.ok) { showAuthError('forgot', res.error); return; }
-    showAuthMessage('forgot', "If an account exists for that email, we've sent a link to reset your password.");
-    document.getElementById('forgot-form').reset();
+    showAuthPanel('verify');
   });
 
-  document.getElementById('reset-form').addEventListener('submit', async (e) => {
+  document.getElementById('verify-form').addEventListener('submit', (e) => {
     e.preventDefault();
-    const submitBtn = e.target.querySelector('button[type="submit"]');
-    if (submitBtn) submitBtn.disabled = true;
-    const res = await GroveAuth.resetPassword(
+    const digits = [...document.querySelectorAll('.code-digit')].map(i => i.value).join('');
+    const res = GroveAuth.verifyResetCode(digits);
+    if (!res.ok) { showAuthError('verify', res.error); return; }
+    showAuthPanel('reset');
+  });
+
+  document.getElementById('reset-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const res = GroveAuth.resetPassword(
       document.getElementById('reset-password').value,
       document.getElementById('reset-confirm').value
     );
-    if (submitBtn) submitBtn.disabled = false;
     if (!res.ok) { showAuthError('reset', res.error); return; }
-    document.getElementById('reset-form').reset();
     showAuthPanel('signin');
     document.getElementById('signin-form').reset();
-    showAuthMessage('signin', 'Your password has been reset. Sign in with your new password.');
   });
 
   // code-digit auto-advance
